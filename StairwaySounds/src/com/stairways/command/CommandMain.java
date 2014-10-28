@@ -1,8 +1,6 @@
 package com.stairways.command;
 
-import com.stairways.dao.UserDAOImpl;
 import com.stairways.jdbc.Bundle;
-import com.stairways.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by matvey on 14.10.14.
  */
-public class User implements Serializable {
+public class Users implements Serializable {
 
 
     private int idUser;
@@ -15,7 +15,7 @@ public class User implements Serializable {
     private String passSalt;
     private int roleId;
 
-    public User() {
+    public Users() {
 
     }
 
@@ -71,5 +71,35 @@ public class User implements Serializable {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Users that = (Users) o;
+
+        if (idUser != that.idUser) return false;
+        if (email != null ? !email.equals(that.email) : that.email != null)
+            return false;
+        if (passHash != null ? !passHash.equals(that.passHash) : that.passHash != null)
+            return false;
+        if (passSalt != null ? !passSalt.equals(that.passSalt) : that.passSalt != null)
+            return false;
+        if (username != null ? !username.equals(that.username) : that.username != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = idUser;
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (passHash != null ? passHash.hashCode() : 0);
+        result = 31 * result + (passSalt != null ? passSalt.hashCode() : 0);
+        return result;
     }
 }

@@ -2,9 +2,10 @@ package com.stairways.test;
 
 import com.stairways.dao.MySqlDAO;
 import com.stairways.dao.UserDAOImpl;
-import com.stairways.model.User;
+import com.stairways.model.Users;
 
 import java.sql.ResultSet;
+import java.util.List;
 
 public class Main {
 
@@ -16,15 +17,19 @@ public class Main {
 //        Connection connection = dataSourceConnector.getConnection();
 
 
-        MySqlDAO<User> userDao = new UserDAOImpl();
-        ResultSet resultSet = userDao.findAll();
+        MySqlDAO<Users> userDao = new UserDAOImpl();
+        List<Users> users = userDao.findAll();
 
         try {
-            while (resultSet.next()) {
-                System.out.println("id_user: " + resultSet.getInt("id_user") +
-                        " email: " + resultSet.getString("email") + " name: "
-                + resultSet.getString("username"));
+            for (Users user: users) {
+                System.out.println(user);
             }
+
+//            while (resultSet.h()) {
+//                System.out.println("id_user: " + resultSet.getInt("id_user") +
+//                        " email: " + resultSet.getString("email") + " name: "
+//                + resultSet.getString("username"));
+//            }
 
         } catch (Exception ex) {
             System.out.print(ex.getMessage());

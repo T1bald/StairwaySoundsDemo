@@ -1,20 +1,16 @@
 package com.stairways.command;
 
 import com.stairways.dao.DAOFactory.DAOFactory;
-import com.stairways.dao.DAOFactory.MySqlDAOFactory;
-import com.stairways.dao.MySqlDAO;
 import com.stairways.dao.UserDAOImpl;
 import com.stairways.jdbc.Bundle;
-import com.stairways.model.User;
+import com.stairways.model.Users;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.ws.http.HTTPException;
 import java.io.IOException;
-import java.sql.ResultSet;
 
 /**
  * Created by matvey on 23.10.14.
@@ -22,9 +18,11 @@ import java.sql.ResultSet;
 public class CommandLogin implements ICommand{
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         String page = null;
-        User user;
+        Users user;
         String login;
         String password;
         UserDAOImpl userDao;
@@ -53,13 +51,13 @@ public class CommandLogin implements ICommand{
             }
 
 
-        } catch (HTTPException httpEx) {
-            httpEx.printStackTrace();
-            return Bundle.getInstance().getProperty(Bundle.ERROR);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return Bundle.getInstance().getProperty(Bundle.ERROR);
-        }
+    } catch (HTTPException httpEx) {
+        httpEx.printStackTrace();
+        return Bundle.getInstance().getProperty(Bundle.ERROR);
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        return Bundle.getInstance().getProperty(Bundle.ERROR);
+    }
 
         return page;
     }

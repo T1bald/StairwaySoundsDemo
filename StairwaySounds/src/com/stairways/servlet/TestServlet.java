@@ -1,6 +1,6 @@
 package com.stairways.servlet;
 
-import com.stairways.model.User;
+import com.stairways.model.Users;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +22,7 @@ public class TestServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        User user = (User) req.getAttribute("user");
+        Users user = (Users) req.getAttribute("user");
 
         resp.setContentType("text/html;");
         PrintWriter writer = resp.getWriter();
