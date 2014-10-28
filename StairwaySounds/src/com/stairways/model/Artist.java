@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by matvey on 28.10.14.
  */
-public class Artists implements Serializable{
+public class Artist implements Serializable{
     private int idArtist;
     private String pseudonym;
     private String description;
@@ -39,7 +39,7 @@ public class Artists implements Serializable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Artists that = (Artists) o;
+        Artist that = (Artist) o;
 
         if (idArtist != that.idArtist) return false;
         if (description != null ? !description.equals(that.description) : that.description != null)

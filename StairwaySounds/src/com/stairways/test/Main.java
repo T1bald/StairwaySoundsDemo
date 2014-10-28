@@ -2,9 +2,8 @@ package com.stairways.test;
 
 import com.stairways.dao.MySqlDAO;
 import com.stairways.dao.UserDAOImpl;
-import com.stairways.model.Users;
+import com.stairways.model.User;
 
-import java.sql.ResultSet;
 import java.util.List;
 
 public class Main {
@@ -17,11 +16,11 @@ public class Main {
 //        Connection connection = dataSourceConnector.getConnection();
 
 
-        MySqlDAO<Users> userDao = new UserDAOImpl();
-        List<Users> users = userDao.findAll();
+        MySqlDAO<User> userDao = new UserDAOImpl();
+        List<User> users = userDao.findAll();
 
         try {
-            for (Users user: users) {
+            for (User user: users) {
                 System.out.println(user);
             }
 

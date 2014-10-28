@@ -3,7 +3,7 @@ package com.stairways.command;
 import com.stairways.dao.DAOFactory.DAOFactory;
 import com.stairways.dao.UserDAOImpl;
 import com.stairways.jdbc.Bundle;
-import com.stairways.model.Users;
+import com.stairways.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +22,7 @@ public class CommandLogin implements ICommand{
             throws ServletException, IOException {
 
         String page = null;
-        Users user;
+        User user;
         String login;
         String password;
         UserDAOImpl userDao;

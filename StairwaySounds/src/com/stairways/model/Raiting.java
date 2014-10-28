@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by matvey on 28.10.14.
  */
-public class Raitings implements Serializable{
+public class Raiting implements Serializable{
 
     private int idRaiting;
     private String downloads;
@@ -31,7 +31,7 @@ public class Raitings implements Serializable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Raitings that = (Raitings) o;
+        Raiting that = (Raiting) o;
 
         if (idRaiting != that.idRaiting) return false;
         if (downloads != null ? !downloads.equals(that.downloads) : that.downloads != null)

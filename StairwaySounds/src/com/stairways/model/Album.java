@@ -1,21 +1,23 @@
 package com.stairways.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Created by matvey on 28.10.14.
  */
-public class Playlists implements Serializable {
-    private int idPlaylist;
+public class Album implements Serializable{
+    private int idAlbum;
     private String name;
     private String description;
+    private byte[] cover;
 
-    public int getIdPlaylist() {
-        return idPlaylist;
+    public int getIdAlbum() {
+        return idAlbum;
     }
 
-    public void setIdPlaylist(int idPlaylist) {
-        this.idPlaylist = idPlaylist;
+    public void setIdAlbum(int idAlbum) {
+        this.idAlbum = idAlbum;
     }
 
     public String getName() {
@@ -34,14 +36,23 @@ public class Playlists implements Serializable {
         this.description = description;
     }
 
+    public byte[] getCover() {
+        return cover;
+    }
+
+    public void setCover(byte[] cover) {
+        this.cover = cover;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Playlists that = (Playlists) o;
+        Album that = (Album) o;
 
-        if (idPlaylist != that.idPlaylist) return false;
+        if (idAlbum != that.idAlbum) return false;
+        if (!Arrays.equals(cover, that.cover)) return false;
         if (description != null ? !description.equals(that.description) : that.description != null)
             return false;
         if (name != null ? !name.equals(that.name) : that.name != null)
@@ -52,9 +63,10 @@ public class Playlists implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = idPlaylist;
+        int result = idAlbum;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (cover != null ? Arrays.hashCode(cover) : 0);
         return result;
     }
 }

@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by matvey on 14.10.14.
  */
-public class Users implements Serializable {
+public class User implements Serializable {
 
 
     private int idUser;
@@ -15,7 +15,7 @@ public class Users implements Serializable {
     private String passSalt;
     private int roleId;
 
-    public Users() {
+    public User() {
 
     }
 
@@ -78,7 +78,7 @@ public class Users implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Users that = (Users) o;
+        User that = (User) o;
 
         if (idUser != that.idUser) return false;
         if (email != null ? !email.equals(that.email) : that.email != null)

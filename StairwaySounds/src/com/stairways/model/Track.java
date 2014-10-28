@@ -5,13 +5,17 @@ import java.io.Serializable;
 /**
  * Created by matvey on 28.10.14.
  */
-public class Tracks implements Serializable{
+public class Track implements Serializable{
+
     private int idTrack;
     private String name;
     private String filePath;
     private Integer price;
     private String duration;
     private String description;
+    private int author_id;
+    private int album_id;
+
 
     public int getIdTrack() {
         return idTrack;
@@ -61,12 +65,28 @@ public class Tracks implements Serializable{
         this.description = description;
     }
 
+    public int getAuthor_id() {
+        return author_id;
+    }
+
+    public void setAuthor_id(int author_id) {
+        this.author_id = author_id;
+    }
+
+    public int getAlbum_id() {
+        return album_id;
+    }
+
+    public void setAlbum_id(int album_id) {
+        this.album_id = album_id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Tracks that = (Tracks) o;
+        Track that = (Track) o;
 
         if (idTrack != that.idTrack) return false;
         if (description != null ? !description.equals(that.description) : that.description != null)

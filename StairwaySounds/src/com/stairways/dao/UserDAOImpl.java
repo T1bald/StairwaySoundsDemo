@@ -1,8 +1,7 @@
 package com.stairways.dao;
 
 import com.stairways.dao.DAOFactory.MySqlDAOFactory;
-import com.stairways.model.Tracks;
-import com.stairways.model.Users;
+import com.stairways.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,19 +12,19 @@ import java.util.List;
 /**
  * Created by matvey on 14.10.14.
  */
-public class UserDAOImpl implements MySqlDAO<Users> {
+public class UserDAOImpl implements MySqlDAO<User> {
 
-Connection connection = MySqlDAOFactory.createConnection();
+private Connection connection = MySqlDAOFactory.createConnection();
 
 @Override
-public List<Users> findAll() {
-    List<Users> usersList = null;
+public List<User> findAll() {
+    List<User> usersList = null;
     ResultSet rs = null;
     try {
 
         PreparedStatement prst = connection.prepareStatement("Select * from users");
         rs = prst.executeQuery();
-        usersList = (List<Users>) rs;
+        usersList = (List<User>) rs;
 
     } catch (Exception ex) {
         ex.printStackTrace();
@@ -36,8 +35,8 @@ public List<Users> findAll() {
 }
 
 @Override
-public Users findById(int id) {
-    Users user = null;
+public User findById(int id) {
+    User user = null;
 
     try {
         PreparedStatement prst = connection.prepareStatement("Select * from users WHERE id_user = ?");
@@ -54,7 +53,7 @@ public Users findById(int id) {
 }
 
 @Override
-public void insert(Users value) {
+public void insert(User value) {
     try {
         PreparedStatement preparedStatement =
                 connection.prepareStatement("insert into users " +
@@ -72,7 +71,7 @@ public void insert(Users value) {
 }
 
 @Override
-public void update(Users value) {
+public void update(User value) {
     try {
         PreparedStatement preparedStatement =
                 connection.prepareStatement("update users set id=?," +
@@ -87,10 +86,10 @@ public void update(Users value) {
     }
 }
 
-public Users findByUserName(String userName) {
+public User findByUserName(String userName) {
 
     ResultSet rs;
-    Users user = null;
+    User user = null;
 
     try {
         PreparedStatement prst =
@@ -110,10 +109,10 @@ public Users findByUserName(String userName) {
 
 }
 
-public Users findByEmail(String email) {
+public User findByEmail(String email) {
 
     ResultSet rs;
-    Users user = null;
+    User user = null;
 
     try {
 
@@ -134,13 +133,13 @@ public Users findByEmail(String email) {
 
     }
 
-private Users resultSetToUser(ResultSet resultSet) {
+private User resultSetToUser(ResultSet resultSet) {
 
-        Users user = new Users();
+        User user = new User();
         try {
 
         while (resultSet.next()) {
-            user = new Users();
+            user = new User();
 
             user.setIdUser(resultSet.getInt("id_user"));
             user.setEmail(resultSet.getString("email"));
@@ -159,7 +158,7 @@ private Users resultSetToUser(ResultSet resultSet) {
     }
 
 private int executePrepareStatement(PreparedStatement stmt,
-            Users value) {
+            User value) {
         int result;
 
         try {
