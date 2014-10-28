@@ -11,7 +11,7 @@ import java.util.List;
 public interface MySqlDAO<T> {
 
     public List<T> findAll();
-    public T getById(int id);
+    public T findById(int id);
     public void insert(T value);
     public void update(T value);
 

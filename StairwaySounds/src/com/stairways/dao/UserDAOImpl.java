@@ -1,11 +1,13 @@
 package com.stairways.dao;
 
 import com.stairways.dao.DAOFactory.MySqlDAOFactory;
+import com.stairways.model.Tracks;
 import com.stairways.model.Users;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -34,26 +36,15 @@ public List<Users> findAll() {
 }
 
 @Override
-public Users getById(int id) {
+public Users findById(int id) {
     Users user = null;
 
     try {
         PreparedStatement prst = connection.prepareStatement("Select * from users WHERE id_user = ?");
         prst.setInt(1, id);
         ResultSet rs = prst.executeQuery();
-        user = new Users();
+        user = resultSetToUser(rs);
 
-        while (rs.next()) {
-
-            user.setIdUser(rs.getInt("id_user"));
-            user.setEmail(rs.getString("email"));
-            user.setUsername(rs.getString("username"));
-            user.setPassHash(rs.getString("pass_hash"));
-            user.setPassSalt(rs.getString("pass_salt"));
-            user.setRoleId(rs.getInt("role_id"));
-
-
-        }
     } catch (Exception ex) {
         ex.printStackTrace();
         return null;
@@ -70,16 +61,9 @@ public void insert(Users value) {
                         "(user_id, email, udername , " +
                         "pass_hash, pass_salt, role_id) values (?,?,?,?,?,?)");
 
-        preparedStatement.setInt(1, value.getIdUser());
-        preparedStatement.setString(2, value.getEmail());
-        preparedStatement.setString(3, value.getUsername());
-        preparedStatement.setString(4, value.getPassHash());
-        preparedStatement.setString(5, value.getPassSalt());
-        preparedStatement.setInt(6, value.getRoleId());
+        int resultExecute = executePrepareStatement(preparedStatement, value);
 
-        int result = preparedStatement.executeUpdate();
-
-        if (result == 1)
+        if (resultExecute == 1)
             System.out.println("Success Insertion!");
 
     } catch (Exception ex) {
@@ -93,17 +77,9 @@ public void update(Users value) {
         PreparedStatement preparedStatement =
                 connection.prepareStatement("update users set id=?," +
                         " email = ?, username = ?, pass_hash = ?, pass_salt= ?, role_id =?");
+        int executeResult = executePrepareStatement(preparedStatement, value);
 
-        preparedStatement.setInt(1, value.getIdUser());
-        preparedStatement.setString(2, value.getEmail());
-        preparedStatement.setString(3, value.getUsername());
-        preparedStatement.setString(4, value.getPassHash());
-        preparedStatement.setString(5, value.getPassSalt());
-        preparedStatement.setInt(6, value.getRoleId());
-
-        int result = preparedStatement.executeUpdate();
-
-        if (result == 1)
+        if (executeResult == 1)
             System.out.println("Update Succeed!");
 
     } catch (Exception ex) {
@@ -119,19 +95,11 @@ public Users findByUserName(String userName) {
     try {
         PreparedStatement prst =
                 connection.prepareStatement("Select * from users WHERE username = ?");
+
         prst.setString(1, userName);
         rs = prst.executeQuery();
 
-        while (rs.next()) {
-            user = new Users();
-
-            user.setIdUser(rs.getInt("id_user"));
-            user.setEmail(rs.getString("email"));
-            user.setUsername(rs.getString("username"));
-            user.setPassHash(rs.getString("pass_hash"));
-            user.setPassSalt(rs.getString("pass_salt"));
-            user.setRoleId(rs.getInt("role_id"));
-        }
+        user = resultSetToUser(rs);
 
     } catch (Exception ex) {
         ex.printStackTrace();
@@ -152,18 +120,10 @@ public Users findByEmail(String email) {
         PreparedStatement prst =
                 connection.prepareStatement("Select * from users WHERE email = ?");
         prst.setString(1, email);
+
         rs = prst.executeQuery();
 
-        while (rs.next()) {
-            user = new Users();
-
-            user.setIdUser(rs.getInt("id_user"));
-            user.setEmail(rs.getString("email"));
-            user.setUsername(rs.getString("username"));
-            user.setPassHash(rs.getString("pass_hash"));
-            user.setPassSalt(rs.getString("pass_salt"));
-            user.setRoleId(rs.getInt("role_id"));
-        }
+        user = resultSetToUser(rs);
 
     } catch (Exception ex) {
         ex.printStackTrace();
@@ -172,5 +132,51 @@ public Users findByEmail(String email) {
 
     return user;
 
-}
+    }
+
+private Users resultSetToUser(ResultSet resultSet) {
+
+        Users user = new Users();
+        try {
+
+        while (resultSet.next()) {
+            user = new Users();
+
+            user.setIdUser(resultSet.getInt("id_user"));
+            user.setEmail(resultSet.getString("email"));
+            user.setUsername(resultSet.getString("username"));
+            user.setPassHash(resultSet.getString("pass_hash"));
+            user.setPassSalt(resultSet.getString("pass_salt"));
+            user.setRoleId(resultSet.getInt("role_id"));
+
+        }
+            } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+            return user;
+        }
+
+        return user;
+    }
+
+private int executePrepareStatement(PreparedStatement stmt,
+            Users value) {
+        int result;
+
+        try {
+            stmt.setInt(1, value.getIdUser());
+            stmt.setString(2, value.getEmail());
+            stmt.setString(3, value.getUsername());
+            stmt.setString(4, value.getPassHash());
+            stmt.setString(5, value.getPassSalt());
+            stmt.setInt(6, value.getRoleId());
+
+            result = stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+
+      return result;
+    }
 }
